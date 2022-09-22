@@ -23,6 +23,10 @@ public class Festmeny {
         return festo;
     }
 
+    public String getCim() {
+        return cim;
+    }
+
     public String getStilus() {
         return stilus;
     }
@@ -46,6 +50,7 @@ public class Festmeny {
     public void setElkelt(Boolean elkelt) {
         this.elkelt = elkelt;
     }
+
 
 
     public void Licit() {

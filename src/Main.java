@@ -6,10 +6,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -21,8 +18,10 @@ public class Main {
         WrongNumber,
         Selled,
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         festmenyek = new ArrayList<>();
+
         festmenyek.add(new Festmeny("Hollókő", "Bálint Ferenc", "Expresszionizmus"));
         festmenyek.add(new Festmeny("Hómező", "Bálint Ferenc", "Konstruktivizmus"));
         festmenyek.add(new Festmeny("Reggel", "Bálint Ferenc", "Futurizmus"));
@@ -49,27 +48,49 @@ public class Main {
         //============================================================================
         // Random indexű random licit
         //============================================================================
-        int randomIndex = (int)(Math.random() * (festmenyek.size()));
+        int randomIndex = (int) (Math.random() * (festmenyek.size()));
         for (int i = 0; i < 20; i++) {
-            int randomLicit = (int)(Math.random() * (100 - 10) + 1) + 10;
+            int randomLicit = (int) (Math.random() * (100 - 10) + 1) + 10;
             festmenyek.get(randomIndex).Licit(randomLicit);
-            System.out.println("Licit értéke " +
-                    randomLicit + " új érték: " + festmenyek.get(randomIndex).getLegmagasabbLicit());
+
         }
 
 
         Licitalas();
-        for (Festmeny festmeny:festmenyek) {
+        for (Festmeny festmeny : festmenyek) {
             if (festmeny.getLegmagasabbLicit() != 100) {
                 festmeny.setElkelt(true);
             }
         }
 
-        for (Festmeny festmeny:festmenyek) {
+        for (Festmeny festmeny : festmenyek) {
             System.out.println(festmeny.toString());
+        }
+        //============================================================================
+        // Random indexű random licit vége
+        //============================================================================
+        legDragabb();
+        if (tiznelTobbLicit()){
+            System.out.println("Van olyan festmény amelyre tíznél több licit jött");
+        } else {
+            System.out.println("Nincs olyan festmény amire tíznél több licit jött volna");
         }
 
 
+        int elNemKeltFestmenySzama = 0;
+        for (Festmeny festmeny:festmenyek) {
+            if (!festmeny.getElkelt()){
+                elNemKeltFestmenySzama++;
+            }
+        }
+        System.out.println("Összesen: " + elNemKeltFestmenySzama + "db festmény nem kelt el.");
+        listaRendez();
+        System.out.println("Rendezett lista");
+        for (Festmeny f:festmenyek) {
+            System.out.println(f.toString());
+        }
+
+        fm.WriteFestmenyek(festmenyek);
 
     }
 
@@ -104,8 +125,7 @@ public class Main {
 
         while (ujrakezd && !kilep) {
 
-
-
+            ujrakezd = false;
             //Licit sorszám
             if (!kezdes) {
                 HibaKezelo(Hibak.WrongNumber);
@@ -122,24 +142,28 @@ public class Main {
             } catch (Exception e) {
                 HibaKezelo(Hibak.NotNumber);
             }
-        }
-        licitSzam++;
 
-        if ((licitSzam < 0) || ((licitSzam - 1) > festmenyek.size())) {
-            ujrakezd = true;
+            licitSzam++;
+
+            if ((licitSzam < 0) || ((licitSzam - 1) > festmenyek.size())) {
+                ujrakezd = true;
+            }
+
+            if (festmenyek.get(licitSzam).getElkelt()) {
+                HibaKezelo(Hibak.Selled);
+                ujrakezd = true;
+            }
+
+            if (festmenyek.get(licitSzam).getLicitekSzama() > 0) {
+                Duration duration = Duration.between(festmenyek.get(licitSzam).getLegutolsoLicitIdeje(), LocalDateTime.now());
+                if (duration.toMinutes() >= 2 && !ujrakezd) {
+                    festmenyek.get(licitSzam).setElkelt(true);
+                    HibaKezelo(Hibak.Selled);
+                    ujrakezd = true;
+                }
+            }
         }
 
-        if (festmenyek.get(licitSzam).getElkelt()) {
-            HibaKezelo(Hibak.Selled);
-            ujrakezd = true;
-        }
-
-        Duration duration = Duration.between(festmenyek.get(licitSzam).getLegutolsoLicitIdeje(), LocalDateTime.now());
-        if (duration.toMinutes() >= 2  && !ujrakezd) {
-            festmenyek.get(licitSzam).setElkelt(true);
-            HibaKezelo(Hibak.Selled);
-            ujrakezd = true;
-        }
 
         //Licit sorszám vége
 
@@ -154,7 +178,7 @@ public class Main {
                 try {
                     festmenyek.get(licitSzam).Licit(Integer.parseInt(licitMertek));
                     kilep = true;
-                } catch (Exception e){
+                } catch (Exception e) {
                     HibaKezelo(Hibak.NotNumber);
                 }
             }
@@ -181,7 +205,7 @@ public class Main {
 
     public static void legDragabb() {
         Festmeny legdragabb = festmenyek.get(0);
-        for (Festmeny festmeny:festmenyek) {
+        for (Festmeny festmeny : festmenyek) {
             if (legdragabb.getLegmagasabbLicit() < festmeny.getLegmagasabbLicit()) {
                 legdragabb = festmeny;
             }
@@ -190,5 +214,27 @@ public class Main {
         System.out.println(legdragabb.toString());
     }
 
+
+    public static boolean tiznelTobbLicit() {
+        for (Festmeny licitSzam:festmenyek) {
+            if (licitSzam.getLicitekSzama() > 10) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void listaRendez() {
+
+        for (int i = 0; i < festmenyek.size(); i++) {  //eredeti: i=1
+            Festmeny x = festmenyek.get(i);
+            int j = i - 1;
+            while(j>=0 && festmenyek.get(j).getLegmagasabbLicit()>x.getLegmagasabbLicit()) {
+                festmenyek.set(j+1, festmenyek.get(j));
+                j = j - 1;
+            }
+            festmenyek.set(j+1, x);
+        }
+    }
 
 }

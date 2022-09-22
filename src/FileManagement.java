@@ -16,4 +16,13 @@ public class FileManagement {
 
         return festmenyek;
     }
+
+    public void WriteFestmenyek(List<Festmeny> lista) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("festmenyek_rendezett.csv"));
+        for (Festmeny f:lista) {
+            bw.write(f.getFesto()+";"+f.getCim()+";"+f.getStilus());
+        }
+        bw.close();
+
+    }
 }
