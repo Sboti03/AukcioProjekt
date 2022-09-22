@@ -1,3 +1,6 @@
+import com.sun.tools.jconsole.JConsoleContext;
+
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +25,7 @@ public class Main {
             String festo = sc.nextLine();
             System.out.println("Kérem adja meg a stílist:");
             String stilus = sc.nextLine();
-            festmenyek.add(new Festmeny(cim,festo,stilus));
+            festmenyek.add(new Festmeny(cim, festo, stilus));
         }
 
         FileManagement fm = new FileManagement();
@@ -31,5 +34,47 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Hiba a fálj beolvasása során");
         }
+
+
+        int randomIndex = (int)Math.floor(Math.random() * (0 - festmenyek.size()));
+        for (int i = 0; i < 20; i++) {
+            int randomLicit = (int)(Math.random() * (10 - 100) + 1) + 10;
+            festmenyek.get(i).Licit(randomLicit);
+            System.out.println("Licit értéke " +
+                    randomLicit + " új érték: " + festmenyek.get(i).getLegmagasabbLicit());
+        }
+
+
+        int licitSzam = -1;
+        boolean kezdes = true;
+        boolean kilep = false;
+
+        while (licitSzam < 0 && (licitSzam - 1) > festmenyek.size() && !kilep) {
+
+            if (!kezdes) {
+                System.out.println("Hibás értéket adott meg");
+            } else {
+                kezdes = true;
+            }
+
+            System.out.print("Kérem adja meg a licit sorszámát: ");
+            try {
+                licitSzam = sc.nextInt();
+                if (licitSzam == 0) {
+                    kilep = true;
+                }
+            } catch (Exception e) {
+                System.out.println("Nem számot adott meg");
+                System.exit(0);
+            }
+        }
+
+        if (!kilep) {
+            
+        }
+
+
+
     }
+
 }
