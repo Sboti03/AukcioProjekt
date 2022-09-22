@@ -72,9 +72,23 @@ public class Main {
                 System.exit(0);
             }
         }
+        licitSzam++;
 
         if (!kilep) {
-
+            String licitMertek = "";
+            sc.nextLine();
+            System.out.println("Kérem adja meg a licit értékét: ");
+            licitMertek = sc.nextLine();
+            if (licitMertek.equals("")) {
+                festmenyek.get(licitSzam).Licit();
+            } else {
+                try {
+                    festmenyek.get(licitSzam).Licit(Integer.parseInt(licitMertek));
+                } catch (Exception e){
+                    System.out.println("Nem számot adott meg");
+                    System.exit(0);
+                }
+            }
         }
 
 
