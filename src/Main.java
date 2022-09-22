@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,6 +23,13 @@ public class Main {
             System.out.println("Kérem adja meg a stílist:");
             String stilus = sc.nextLine();
             festmenyek.add(new Festmeny(cim,festo,stilus));
+        }
+
+        FileManagement fm = new FileManagement();
+        try {
+            festmenyek.addAll(fm.ReadFestmeny("festmenyek.csv"));
+        } catch (IOException e) {
+            System.out.println("Hiba a fálj beolvasása során");
         }
     }
 }
