@@ -16,15 +16,19 @@ public class Main {
 
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Kérem adjon meg egy darabszámot");
+        System.out.print("Kérem adjon meg egy darabszámot: ");
         int darabSzam = sc.nextInt();
+        sc.nextLine();
         for (int i = 0; i < darabSzam; i++) {
-            System.out.println("Kérem adja meg a festmény címét: ");
+            System.out.println("Kérem adja meg a festmény címét:");
             String cim = sc.nextLine();
+
             System.out.println("Kérem adja meg a festő nevét:");
             String festo = sc.nextLine();
+
             System.out.println("Kérem adja meg a stílist:");
             String stilus = sc.nextLine();
+
             festmenyek.add(new Festmeny(cim, festo, stilus));
         }
 
@@ -36,12 +40,12 @@ public class Main {
         }
 
 
-        int randomIndex = (int)Math.floor(Math.random() * (0 - festmenyek.size()));
+        int randomIndex = (int)(Math.random() * (festmenyek.size()));
         for (int i = 0; i < 20; i++) {
-            int randomLicit = (int)(Math.random() * (10 - 100) + 1) + 10;
-            festmenyek.get(i).Licit(randomLicit);
+            int randomLicit = (int)(Math.random() * (100 - 10) + 1) + 10;
+            festmenyek.get(randomIndex).Licit(randomLicit);
             System.out.println("Licit értéke " +
-                    randomLicit + " új érték: " + festmenyek.get(i).getLegmagasabbLicit());
+                    randomLicit + " új érték: " + festmenyek.get(randomIndex).getLegmagasabbLicit());
         }
 
 
@@ -49,7 +53,7 @@ public class Main {
         boolean kezdes = true;
         boolean kilep = false;
 
-        while (licitSzam < 0 && (licitSzam - 1) > festmenyek.size() && !kilep) {
+        while (licitSzam < 0 || (licitSzam - 1) > festmenyek.size() && !kilep) {
 
             if (!kezdes) {
                 System.out.println("Hibás értéket adott meg");
@@ -70,7 +74,7 @@ public class Main {
         }
 
         if (!kilep) {
-            
+
         }
 
 

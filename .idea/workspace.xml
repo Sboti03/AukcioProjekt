@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ccd0f3f-5e42-4796-b494-d9a5ab40d108" name="Changes" comment="2. feladat a, b, c">
+    <list default="true" id="7ccd0f3f-5e42-4796-b494-d9a5ab40d108" name="Changes" comment="2. feladat a, b, c, d fele">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -47,7 +47,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1663826559833</updated>
-      <workItem from="1663826561660" duration="5538000" />
+      <workItem from="1663826561660" duration="6274000" />
     </task>
     <task id="LOCAL-00001" summary="1. feladat">
       <created>1663828647169</created>
@@ -70,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663833765251</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="2. feladat a, b, c, d fele">
+      <created>1663835576989</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1663835576989</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,6 +99,7 @@
     <MESSAGE value="1. feladat" />
     <MESSAGE value="2. feladat a, b" />
     <MESSAGE value="2. feladat a, b, c" />
-    <option name="LAST_COMMIT_MESSAGE" value="2. feladat a, b, c" />
+    <MESSAGE value="2. feladat a, b, c, d fele" />
+    <option name="LAST_COMMIT_MESSAGE" value="2. feladat a, b, c, d fele" />
   </component>
 </project>
