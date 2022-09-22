@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Festmeny {
     private String cim;
@@ -6,7 +7,7 @@ public class Festmeny {
     private String stilus;
     private int licitekSzama;
     private int legmagasabbLicit;
-    private LocalDate legutolsoLicitIdeje;
+    private LocalDateTime legutolsoLicitIdeje;
     private Boolean elkelt;
 
     public Festmeny(String cim, String festo, String stilus) {
@@ -34,7 +35,7 @@ public class Festmeny {
         return legmagasabbLicit;
     }
 
-    public LocalDate getLegutolsoLicitIdeje() {
+    public LocalDateTime getLegutolsoLicitIdeje() {
         return legutolsoLicitIdeje;
     }
 
@@ -53,7 +54,7 @@ public class Festmeny {
             System.out.println("Hiba, a festmény már elkelt");
         } else {
             if (licitekSzama == 0) {
-                legutolsoLicitIdeje = LocalDate.now();
+                legutolsoLicitIdeje = LocalDateTime.now();
                 legmagasabbLicit = 100;
                 licitekSzama++;
             } else {
@@ -71,11 +72,11 @@ public class Festmeny {
                 System.out.println("Hiba, a festmény már elkelt");
             } else {
                 if (licitekSzama == 0) {
-                    legutolsoLicitIdeje = LocalDate.now();
+                    legutolsoLicitIdeje = LocalDateTime.now();
                     legmagasabbLicit = 100;
                     licitekSzama++;
                 } else {
-                    legutolsoLicitIdeje = LocalDate.now();
+                    legutolsoLicitIdeje = LocalDateTime.now();
                     legmagasabbLicit = (legmagasabbLicit * (mertek + 100)) / 100;
                     licitekSzama++;
                     legmagasabbLicit = (int)Math.round((double) legmagasabbLicit/100)*100;

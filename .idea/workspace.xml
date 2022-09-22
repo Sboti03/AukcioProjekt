@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ccd0f3f-5e42-4796-b494-d9a5ab40d108" name="Changes" comment="2. feladat a, b, c, d fele + javít">
+    <list default="true" id="7ccd0f3f-5e42-4796-b494-d9a5ab40d108" name="Changes" comment="eddig jutottam">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Festmeny.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Festmeny.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +37,8 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -47,7 +49,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1663826559833</updated>
-      <workItem from="1663826561660" duration="6732000" />
+      <workItem from="1663826561660" duration="6808000" />
+      <workItem from="1663838762679" duration="1574000" />
+      <workItem from="1663867659873" duration="2912000" />
     </task>
     <task id="LOCAL-00001" summary="1. feladat">
       <created>1663828647169</created>
@@ -84,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663836346079</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="eddig jutottam">
+      <created>1663836833492</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663836833492</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,6 +119,7 @@
     <MESSAGE value="2. feladat a, b, c" />
     <MESSAGE value="2. feladat a, b, c, d fele" />
     <MESSAGE value="2. feladat a, b, c, d fele + javít" />
-    <option name="LAST_COMMIT_MESSAGE" value="2. feladat a, b, c, d fele + javít" />
+    <MESSAGE value="eddig jutottam" />
+    <option name="LAST_COMMIT_MESSAGE" value="eddig jutottam" />
   </component>
 </project>

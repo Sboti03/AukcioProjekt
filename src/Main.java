@@ -2,19 +2,78 @@ import com.sun.tools.jconsole.JConsoleContext;
 
 import java.io.Console;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+    public static List<Festmeny> festmenyek;
+
+    public static enum Hibak {
+        FileError,
+        NotNumber,
+        WrongNumber,
+        Selled,
+    }
     public static void main(String[] args) {
-        List<Festmeny> festmenyek = new ArrayList<>();
+        festmenyek = new ArrayList<>();
         festmenyek.add(new Festmeny("Hollókő", "Bálint Ferenc", "Expresszionizmus"));
         festmenyek.add(new Festmeny("Hómező", "Bálint Ferenc", "Konstruktivizmus"));
         festmenyek.add(new Festmeny("Reggel", "Bálint Ferenc", "Futurizmus"));
 
 
+        Scanner sc = new Scanner(System.in);
+        //Festmény hozzá  adás
+        FestmenyAdd();
+
+        //============================================================================
+        //File beolvasás
+        //============================================================================
+        FileManagement fm = new FileManagement();
+        try {
+            festmenyek.addAll(fm.ReadFestmeny("festmenyek.csv"));
+        } catch (IOException e) {
+            HibaKezelo(Hibak.FileError);
+        }
+        //============================================================================
+        //File beolvasás vége
+        //============================================================================
+
+
+        //============================================================================
+        // Random indexű random licit
+        //============================================================================
+        int randomIndex = (int)(Math.random() * (festmenyek.size()));
+        for (int i = 0; i < 20; i++) {
+            int randomLicit = (int)(Math.random() * (100 - 10) + 1) + 10;
+            festmenyek.get(randomIndex).Licit(randomLicit);
+            System.out.println("Licit értéke " +
+                    randomLicit + " új érték: " + festmenyek.get(randomIndex).getLegmagasabbLicit());
+        }
+
+
+        Licitalas();
+        for (Festmeny festmeny:festmenyek) {
+            if (festmeny.getLegmagasabbLicit() != 100) {
+                festmeny.setElkelt(true);
+            }
+        }
+
+        for (Festmeny festmeny:festmenyek) {
+            System.out.println(festmeny.toString());
+        }
+
+
+
+    }
+
+    public static void FestmenyAdd() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Kérem adjon meg egy darabszámot: ");
         int darabSzam = sc.nextInt();
@@ -32,31 +91,24 @@ public class Main {
             festmenyek.add(new Festmeny(cim, festo, stilus));
         }
 
-        FileManagement fm = new FileManagement();
-        try {
-            festmenyek.addAll(fm.ReadFestmeny("festmenyek.csv"));
-        } catch (IOException e) {
-            System.out.println("Hiba a fálj beolvasása során");
-        }
+    }
 
-
-        int randomIndex = (int)(Math.random() * (festmenyek.size()));
-        for (int i = 0; i < 20; i++) {
-            int randomLicit = (int)(Math.random() * (100 - 10) + 1) + 10;
-            festmenyek.get(randomIndex).Licit(randomLicit);
-            System.out.println("Licit értéke " +
-                    randomLicit + " új érték: " + festmenyek.get(randomIndex).getLegmagasabbLicit());
-        }
-
-
+    public static void Licitalas() {
+        Scanner sc = new Scanner(System.in);
         int licitSzam = -1;
+
         boolean kezdes = true;
         boolean kilep = false;
+        boolean ujrakezd = true;
 
-        while (licitSzam < 0 || (licitSzam - 1) > festmenyek.size() && !kilep) {
 
+        while (ujrakezd && !kilep) {
+
+
+
+            //Licit sorszám
             if (!kezdes) {
-                System.out.println("Hibás értéket adott meg");
+                HibaKezelo(Hibak.WrongNumber);
             } else {
                 kezdes = true;
             }
@@ -68,13 +120,30 @@ public class Main {
                     kilep = true;
                 }
             } catch (Exception e) {
-                System.out.println("Nem számot adott meg");
-                System.exit(0);
+                HibaKezelo(Hibak.NotNumber);
             }
         }
         licitSzam++;
 
-        if (!kilep) {
+        if ((licitSzam < 0) || ((licitSzam - 1) > festmenyek.size())) {
+            ujrakezd = true;
+        }
+
+        if (festmenyek.get(licitSzam).getElkelt()) {
+            HibaKezelo(Hibak.Selled);
+            ujrakezd = true;
+        }
+
+        Duration duration = Duration.between(festmenyek.get(licitSzam).getLegutolsoLicitIdeje(), LocalDateTime.now());
+        if (duration.toMinutes() >= 2  && !ujrakezd) {
+            festmenyek.get(licitSzam).setElkelt(true);
+            HibaKezelo(Hibak.Selled);
+            ujrakezd = true;
+        }
+
+        //Licit sorszám vége
+
+        if (!ujrakezd && !kilep) {
             String licitMertek = "";
             sc.nextLine();
             System.out.println("Kérem adja meg a licit értékét: ");
@@ -84,15 +153,42 @@ public class Main {
             } else {
                 try {
                     festmenyek.get(licitSzam).Licit(Integer.parseInt(licitMertek));
+                    kilep = true;
                 } catch (Exception e){
-                    System.out.println("Nem számot adott meg");
-                    System.exit(0);
+                    HibaKezelo(Hibak.NotNumber);
                 }
             }
         }
 
-
-
     }
+
+    public static void HibaKezelo(Hibak hibaKod) {
+        switch (hibaKod) {
+            case Selled:
+                System.out.println("A festmény már elkelt!");
+                break;
+            case FileError:
+                System.out.println("Hibás file");
+                break;
+            case NotNumber:
+                System.out.println("Nem számot adott meg!");
+                System.exit(0);
+            case WrongNumber:
+                System.out.println("Rossz számot adott meg!");
+                break;
+        }
+    }
+
+    public static void legDragabb() {
+        Festmeny legdragabb = festmenyek.get(0);
+        for (Festmeny festmeny:festmenyek) {
+            if (legdragabb.getLegmagasabbLicit() < festmeny.getLegmagasabbLicit()) {
+                legdragabb = festmeny;
+            }
+        }
+        System.out.println("A legdrágább festmény adatai: ");
+        System.out.println(legdragabb.toString());
+    }
+
 
 }
